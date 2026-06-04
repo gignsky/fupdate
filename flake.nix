@@ -21,7 +21,8 @@
       packages = forAllSystems (pkgs: {
         default = pkgs.writeShellScriptBin "fupdate" ''
           COMMIT=""
-          INPUT=""
+          INPUT=false
+          SELECTED_INPUT=""
           STAY=false
 
           # Parse command line args
@@ -51,19 +52,22 @@
                 ;;
               *)
                 echo "Received: $1"
-                INPUT=$1
+                SELECTED_INPUT=$1
+                INPUT=true
                 shift
                 ;;
             esac
           done
 
-          if [ $INPUT == "" ]; then
-            input=$(                                           \
-              nix flake metadata --json                        \
-              | ${pkgs.jq}/bin/jq -r ".locks.nodes.root.inputs | keys[]" \
-              | ${pkgs.fzf}/bin/fzf)
+          if $INPUT; then
+              input=$SELECTED_INPUT 
           else
-            input=$INPUT 
+            if [[ ! $STAY ]]; then 
+              input=$(                                           \
+                nix flake metadata --json                        \
+                | ${pkgs.jq}/bin/jq -r ".locks.nodes.root.inputs | keys[]" \
+                | ${pkgs.fzf}/bin/fzf)
+            fi 
           fi
 
           if [ $COMMIT == "" ]; then 

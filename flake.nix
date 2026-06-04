@@ -57,7 +57,7 @@
             esac
           done
 
-          if [ "$INPUT" == "" ]; then
+          if [ $INPUT == "" ]; then
             input=$(                                           \
               nix flake metadata --json                        \
               | ${pkgs.jq}/bin/jq -r ".locks.nodes.root.inputs | keys[]" \
@@ -66,7 +66,7 @@
             input=$INPUT 
           fi
 
-          if [ "$COMMIT" == "" ]; then 
+          if [ $COMMIT == "" ]; then 
             COMMIT=$(printf "yes\nno" | ${pkgs.fzf}/bin/fzf --prompt="Commit lock file? ")
           fi
 

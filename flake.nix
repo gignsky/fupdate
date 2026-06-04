@@ -46,6 +46,7 @@
                 ;;
               -s|--stay)
                 STAY=true
+                echo "STAY SELECTED: Flake Lock Update -- No Input Update"
                 shift
                 ;;
               *)

@@ -1,5 +1,5 @@
 {
-  description = "update-input";
+  description = "fupdate, or, Flake Update -- Tastefully Aquired From Vimjoyer & Refined";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";

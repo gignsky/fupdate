@@ -57,13 +57,13 @@
             esac
           done
 
-          if [ $INPUT != "" ]; then
-            input=$INPUT 
-          else
+          if [ $INPUT == "" ]; then
             input=$(                                           \
               nix flake metadata --json                        \
               | ${pkgs.jq}/bin/jq -r ".locks.nodes.root.inputs | keys[]" \
               | ${pkgs.fzf}/bin/fzf)
+          else
+            input=$INPUT 
           fi
 
           if [ $COMMIT == "" ]; then 

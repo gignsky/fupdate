@@ -78,10 +78,21 @@
             echo "NO Lock File will be committed."
           fi
 
-          if [ "$commit" = "yes" ]; then
-            nix flake update $input --commit-lock-file
+          if $STAY; then
+            echo "Updating Lock File"
+            if [ "$commit" == "yes" ]; then 
+              nix flake lock --commit-lock-file
+            else
+              nix flake lock
+            fi
+            echo "Lock File Updated!"
           else
-            nix flake update $input
+            echo "Updating input: $input - You answered: '$commit' to Committing."
+            if [ "$commit" = "yes" ]; then
+              nix flake update $input --commit-lock-file
+            else
+              nix flake update $input
+            fi
           fi
         '';
       });

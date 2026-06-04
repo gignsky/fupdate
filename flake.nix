@@ -65,14 +65,14 @@
               | ${pkgs.fzf}/bin/fzf)
           fi
 
-          if [ $COMMIT != "" ]; then 
+          if [ $COMMIT == "" ]; then 
+            commit=$(printf "yes\nno" | ${pkgs.fzf}/bin/fzf --prompt="Commit lock file? ")
+          else
             if $COMMIT; then 
               commit="yes"
             else
               commit="nno"
             fi
-          else
-            commit=$(printf "yes\nno" | ${pkgs.fzf}/bin/fzf --prompt="Commit lock file? ")
           fi
 
           if [ "$commit" = "yes" ]; then

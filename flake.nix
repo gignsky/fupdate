@@ -51,6 +51,7 @@
               *)
                 echo "Received: $1"
                 INPUT=$1
+                shift
                 ;;
             esac
           done

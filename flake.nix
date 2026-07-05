@@ -62,11 +62,13 @@
           if $INPUT; then
               input=$SELECTED_INPUT 
           else
-            if [[ ! $STAY ]]; then 
+            if ! $STAY; then 
+              # echo "No input specified, please select an input to update:"
               input=$(                                           \
                 nix flake metadata --json                        \
                 | ${pkgs.jq}/bin/jq -r ".locks.nodes.root.inputs | keys[]" \
                 | ${pkgs.fzf}/bin/fzf)
+              # echo "You selected: $input"
             fi 
           fi
 
